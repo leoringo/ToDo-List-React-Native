@@ -7,11 +7,15 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { fetchList } from "../actions/actions";
+import { fetchList } from "../storage/actions";
 import ListCard from "../components/ListCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategory } from "../store/actions/actionType";
 
 export default function HomeScreen() {
   const [list, setList] = useState([]);
+  
+
   useEffect(() => {
     fetchList()
       .then((data) => setList(data))
@@ -28,9 +32,9 @@ export default function HomeScreen() {
           style={styles.imageStyle}
         />
         <ScrollView style={styles.scrollContainer}>
-            {list.map((list) => (
-              <ListCard list={list} />
-            ))}
+          {list.map((list) => (
+            <ListCard list={list} key={list.id} />
+          ))}
         </ScrollView>
       </SafeAreaView>
     </>
@@ -45,6 +49,6 @@ const styles = StyleSheet.create({
 
   scrollContainer: {
     backgroundColor: "#dce775",
-    paddingTop: 20
+    paddingTop: 20,
   },
 });
